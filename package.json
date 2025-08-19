@@ -1,0 +1,33 @@
+{
+  "name": "camera-ai-monitor-dashboard",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3001",
+    "build": "next build",
+    "start": "next start -p 3001",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "14.0.4",
+    "react": "^18",
+    "react-dom": "^18",
+    "antd": "^5.12.8",
+    "@ant-design/icons": "^5.2.6",
+    "@ant-design/charts": "^2.0.2",
+    "echarts": "^5.4.3",
+    "echarts-for-react": "^3.0.2",
+    "dayjs": "^1.11.10",
+    "axios": "^1.6.2",
+    "framer-motion": "^10.16.16",
+    "styled-components": "^6.1.6"
+  },
+  "devDependencies": {
+    "typescript": "^5",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "14.0.4"
+  }
+}

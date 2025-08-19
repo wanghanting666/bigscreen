@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  camera-monitor-dashboard:
+    build: .
+    ports:
+      - '3001:3001'
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+    volumes:
+      - ./logs:/app/logs
+    restart: unless-stopped
+    networks:
+      - monitor-network
+
+  # 可选：添加Redis用于缓存
+  redis:
+    image: redis:7-alpine
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis-data:/data
+    restart: unless-stopped
+    networks:
+      - monitor-network
+
+volumes:
+  redis-data:
+
+networks:
+  monitor-network:
+    driver: bridge
