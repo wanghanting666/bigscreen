@@ -11,7 +11,8 @@ import {
   UserOutlined,
   DashboardOutlined,
   BarChartOutlined,
-  SettingOutlined
+  SettingOutlined,
+  DatabaseOutlined
 } from '@ant-design/icons'
 import VideoStream from '@/components/VideoStream'
 import DataChart from '@/components/DataChart'
@@ -321,103 +322,172 @@ export default function Dashboard() {
 
       <Layout>
         <StyledSider width={200}>
-          <SidebarHeader>
-            <h3 className="sidebar-title">功能菜单</h3>
-            <div className="sidebar-subtitle">Navigation</div>
-          </SidebarHeader>
+          <div style={{ padding: '16px', textAlign: 'center' }}>
+            <h2 style={{ color: 'var(--text-primary)', margin: 0 }}>AI监控系统</h2>
+          </div>
           <Menu
             mode="inline"
             selectedKeys={[selectedMenu]}
-            items={menuItems}
-            onClick={handleMenuClick}
-          />
+            onSelect={({ key }) => setSelectedMenu(key)}
+            style={{ borderRight: 0 }}
+          >
+            <Menu.Item key="monitor" icon={<VideoCameraOutlined />}>
+              实时监控
+            </Menu.Item>
+            <Menu.Item key="alarms" icon={<AlertOutlined />}>
+              告警管理
+            </Menu.Item>
+            <Menu.Item key="statistics" icon={<BarChartOutlined />}>
+              统计报表
+            </Menu.Item>
+            <Menu.Item key="data" icon={<DatabaseOutlined />}>
+              数据可视化
+            </Menu.Item>
+          </Menu>
         </StyledSider>
 
         <StyledContent>
-          <Row gutter={[20, 20]}>
-            {/* 主要视频流区域 */}
-            <Col xs={24} lg={16}>
-              <StyledCard title="实时监控" extra={<WhiteStatusTag>在线</WhiteStatusTag>}>
-                <VideoStream 
-                  selectedCameraId={selectedCameraId}
-                  onCameraChange={handleCameraChange}
+          {selectedMenu === 'monitor' && (
+            <Row gutter={[20, 20]}>
+              {/* 主要视频流区域 */}
+              <Col xs={24} lg={16}>
+                <StyledCard title="实时监控" extra={<WhiteStatusTag>在线</WhiteStatusTag>}>
+                  <VideoStream 
+                    selectedCameraId={selectedCameraId}
+                    onCameraChange={handleCameraChange}
+                  />
+                </StyledCard>
+              </Col>
+
+              {/* 右侧统计面板 */}
+              <Col xs={24} lg={8}>
+                <Row gutter={[0, 20]}>
+                  <Col span={24}>
+                    <StyledCard title="系统状态">
+                      <ProgressWrapper>
+                        <div className="progress-label">
+                          <span>CPU使用率</span>
+                          <span className="progress-value">{statistics.cpuUsage}%</span>
+                        </div>
+                        <Progress percent={statistics.cpuUsage} strokeColor={PRIMARY_COLOR} />
+                      </ProgressWrapper>
+                      <ProgressWrapper>
+                        <div className="progress-label">
+                          <span>内存使用率</span>
+                          <span className="progress-value">{statistics.memoryUsage}%</span>
+                        </div>
+                        <Progress percent={statistics.memoryUsage} strokeColor={SUCCESS_COLOR} />
+                      </ProgressWrapper>
+                      <ProgressWrapper>
+                        <div className="progress-label">
+                          <span>存储使用率</span>
+                          <span className="progress-value">{statistics.storageUsage}%</span>
+                        </div>
+                        <Progress percent={statistics.storageUsage} strokeColor={WARNING_COLOR} />
+                      </ProgressWrapper>
+                    </StyledCard>
+                  </Col>
+                  
+                  <Col span={24}>
+                    <StyledCard title="快速操作">
+                      <QuickActionItem>
+                        <span className="action-label">系统时间</span>
+                        <ClockCircleOutlined className="action-icon" />
+                      </QuickActionItem>
+                      <QuickActionItem>
+                        <span className="action-label">在线用户</span>
+                        <UserOutlined className="action-icon" />
+                      </QuickActionItem>
+                      <QuickActionItem>
+                        <span className="action-label">系统状态</span>
+                        <CheckCircleOutlined className="action-icon" />
+                      </QuickActionItem>
+                    </StyledCard>
+                  </Col>
+                </Row>
+              </Col>
+
+              {/* 数据图表区域 */}
+              <Col xs={24} lg={12}>
+                <StyledCard title="监控数据趋势">
+                  <DataChart 
+                    type="line"
+                    data={[
+                      { time: '00:00', value: 820 },
+                      { time: '04:00', value: 932 },
+                      { time: '08:00', value: 901 },
+                      { time: '12:00', value: 934 },
+                      { time: '16:00', value: 1290 },
+                      { time: '20:00', value: 1330 },
+                      { time: '24:00', value: 1320 }
+                    ]}
+                    config={{
+                      xField: 'time',
+                      yField: 'value',
+                      smooth: true
+                    }}
+                  />
+                </StyledCard>
+              </Col>
+
+              {/* 告警列表 */}
+              <Col xs={24} lg={12}>
+                <StyledCard title="实时告警" extra={<WhiteStatusTag>{alarms.length}条</WhiteStatusTag>}>
+                  <AlarmList alarms={alarms} />
+                </StyledCard>
+              </Col>
+
+              {/* 摄像头网格 */}
+              <Col span={24}>
+                <StyledCard title="摄像头状态">
+                  <CameraGrid 
+                    cameras={cameras} 
+                    onCameraView={handleCameraView}
+                    onCameraUpdate={handleCameraUpdate}
+                  />
+                </StyledCard>
+              </Col>
+            </Row>
+          )}
+
+          {selectedMenu === 'alarms' && (
+            <Row gutter={[20, 20]}>
+              <Col span={24}>
+                <StyledCard title="告警管理">
+                  <AlarmList alarms={alarms} />
+                </StyledCard>
+              </Col>
+            </Row>
+          )}
+
+          {selectedMenu === 'statistics' && (
+            <Row gutter={[20, 20]}>
+              <Col span={24}>
+                <StyledCard title="统计报表">
+                  <div style={{ padding: '20px', textAlign: 'center', color: 'var(--text-secondary)' }}>
+                    统计报表功能开发中...
+                  </div>
+                </StyledCard>
+              </Col>
+            </Row>
+          )}
+
+          {selectedMenu === 'data' && (
+            <Row gutter={[20, 20]}>
+              <Col span={24}>
+                <iframe 
+                  src="/data" 
+                  style={{ 
+                    width: '100%', 
+                    height: 'calc(100vh - 200px)', 
+                    border: 'none',
+                    borderRadius: '8px',
+                    overflow: 'hidden'
+                  }} 
                 />
-              </StyledCard>
-            </Col>
-
-            {/* 右侧统计面板 */}
-            <Col xs={24} lg={8}>
-              <Row gutter={[0, 20]}>
-                <Col span={24}>
-                  <StyledCard title="系统状态">
-                    <ProgressWrapper>
-                      <div className="progress-label">
-                        <span>CPU使用率</span>
-                        <span className="progress-value">{statistics.cpuUsage}%</span>
-                      </div>
-                      <Progress percent={statistics.cpuUsage} strokeColor={PRIMARY_COLOR} />
-                    </ProgressWrapper>
-                    <ProgressWrapper>
-                      <div className="progress-label">
-                        <span>内存使用率</span>
-                        <span className="progress-value">{statistics.memoryUsage}%</span>
-                      </div>
-                      <Progress percent={statistics.memoryUsage} strokeColor={SUCCESS_COLOR} />
-                    </ProgressWrapper>
-                    <ProgressWrapper>
-                      <div className="progress-label">
-                        <span>存储使用率</span>
-                        <span className="progress-value">{statistics.storageUsage}%</span>
-                      </div>
-                      <Progress percent={statistics.storageUsage} strokeColor={WARNING_COLOR} />
-                    </ProgressWrapper>
-                  </StyledCard>
-                </Col>
-                
-                <Col span={24}>
-                  <StyledCard title="快速操作">
-                    <QuickActionItem>
-                      <span className="action-label">系统时间</span>
-                      <ClockCircleOutlined className="action-icon" />
-                    </QuickActionItem>
-                    <QuickActionItem>
-                      <span className="action-label">在线用户</span>
-                      <UserOutlined className="action-icon" />
-                    </QuickActionItem>
-                    <QuickActionItem>
-                      <span className="action-label">系统状态</span>
-                      <CheckCircleOutlined className="action-icon" />
-                    </QuickActionItem>
-                  </StyledCard>
-                </Col>
-              </Row>
-            </Col>
-
-            {/* 数据图表区域 */}
-            <Col xs={24} lg={12}>
-              <StyledCard title="监控数据趋势">
-                <DataChart />
-              </StyledCard>
-            </Col>
-
-            {/* 告警列表 */}
-            <Col xs={24} lg={12}>
-              <StyledCard title="实时告警" extra={<WhiteStatusTag>{alarms.length}条</WhiteStatusTag>}>
-                <AlarmList alarms={alarms} />
-              </StyledCard>
-            </Col>
-
-            {/* 摄像头网格 */}
-            <Col span={24}>
-              <StyledCard title="摄像头状态">
-                <CameraGrid 
-                  cameras={cameras} 
-                  onCameraView={handleCameraView}
-                  onCameraUpdate={handleCameraUpdate}
-                />
-              </StyledCard>
-            </Col>
-          </Row>
+              </Col>
+            </Row>
+          )}
         </StyledContent>
       </Layout>
     </StyledLayout>

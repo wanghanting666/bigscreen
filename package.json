@@ -9,25 +9,26 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ant-design/charts": "^2.0.2",
+    "@ant-design/icons": "^5.2.6",
+    "@ant-design/plots": "^2.6.3",
+    "antd": "^5.12.8",
+    "axios": "^1.6.2",
+    "dayjs": "^1.11.10",
+    "echarts": "^5.6.0",
+    "echarts-for-react": "^3.0.2",
+    "framer-motion": "^10.16.16",
     "next": "14.0.4",
     "react": "^18",
     "react-dom": "^18",
-    "antd": "^5.12.8",
-    "@ant-design/icons": "^5.2.6",
-    "@ant-design/charts": "^2.0.2",
-    "echarts": "^5.4.3",
-    "echarts-for-react": "^3.0.2",
-    "dayjs": "^1.11.10",
-    "axios": "^1.6.2",
-    "framer-motion": "^10.16.16",
     "styled-components": "^6.1.6"
   },
   "devDependencies": {
-    "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
-    "eslint-config-next": "14.0.4"
+    "eslint-config-next": "14.0.4",
+    "typescript": "^5"
   }
 }
