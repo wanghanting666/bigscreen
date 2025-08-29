@@ -88,7 +88,7 @@ const DataChart: React.FC<DataChartProps> = ({ type, data, config }) => {
         chartInstance.current.dispose()
       }
     }
-  }, [type, data, config])
+  }, []) // 只在组件挂载时初始化一次
 
   useEffect(() => {
     const handleResize = () => {
@@ -118,7 +118,7 @@ const DataChart: React.FC<DataChartProps> = ({ type, data, config }) => {
     }
 
     return () => observer.disconnect()
-  }, [type, data, config])
+  }, []) // 只在组件挂载时监听主题变化
 
   const getChartOption = (type: string, data: any[], config: any) => {
     const colors = getThemeColors()

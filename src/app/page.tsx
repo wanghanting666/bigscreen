@@ -246,6 +246,11 @@ export default function Dashboard() {
       label: '数据可视化',
     },
     {
+      key: 'bigscreen',
+      icon: <EyeOutlined />,
+      label: '大屏展示',
+    },
+    {
       key: 'settings',
       icon: <SettingOutlined />,
       label: '系统设置',
@@ -477,6 +482,23 @@ export default function Dashboard() {
               <Col span={24}>
                 <iframe 
                   src="/data" 
+                  style={{ 
+                    width: '100%', 
+                    height: 'calc(100vh - 200px)', 
+                    border: 'none',
+                    borderRadius: '8px',
+                    overflow: 'hidden'
+                  }} 
+                />
+              </Col>
+            </Row>
+          )}
+
+          {selectedMenu === 'bigscreen' && (
+            <Row gutter={[20, 20]}>
+              <Col span={24}>
+                <iframe 
+                  src="/bigscreen" 
                   style={{ 
                     width: '100%', 
                     height: 'calc(100vh - 200px)', 
