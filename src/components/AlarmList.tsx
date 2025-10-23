@@ -181,18 +181,20 @@ const AlarmList: React.FC<AlarmListProps> = ({ alarms }) => {
     <StyledList
       itemLayout="horizontal"
       dataSource={alarms}
-      renderItem={(alarm: Alarm) => (
+      renderItem={(alarm) => {
+        const alarmData = alarm as Alarm;
+        return (
         <List.Item
           actions={[
-            <Tooltip key="time" title={alarm.time}>
+            <Tooltip key="time" title={alarmData.time}>
               <TimeDisplay>
                 <ClockCircleOutlined />
-                <span>{formatTime(alarm.time)}</span>
+                <span>{formatTime(alarmData.time)}</span>
               </TimeDisplay>
             </Tooltip>,
-            <Tooltip key="status" title={alarm.status === 'active' ? '未处理' : '已处理'}>
-              <StatusIcon status={alarm.status}>
-                {getStatusIcon(alarm.status)}
+            <Tooltip key="status" title={alarmData.status === 'active' ? '未处理' : '已处理'}>
+              <StatusIcon status={alarmData.status}>
+                {getStatusIcon(alarmData.status)}
               </StatusIcon>
             </Tooltip>,
             <ActionButton 
@@ -206,27 +208,28 @@ const AlarmList: React.FC<AlarmListProps> = ({ alarms }) => {
         >
           <List.Item.Meta
             avatar={
-              <AlarmIcon level={alarm.level}>
-                {getAlarmIcon(alarm.type)}
+              <AlarmIcon level={alarmData.level}>
+                {getAlarmIcon(alarmData.type)}
               </AlarmIcon>
             }
             title={
               <Space>
-                <span>{alarm.message}</span>
-                <AlarmTag color={getLevelColor(alarm.level)}>
-                  {alarm.level}
+                <span>{alarmData.message}</span>
+                <AlarmTag color={getLevelColor(alarmData.level)}>
+                  {alarmData.level}
                 </AlarmTag>
               </Space>
             }
             description={
               <Space direction="vertical" size={2} style={{ width: '100%' }}>
-                <span>摄像头: {alarm.camera}</span>
-                <span>类型: {alarm.type}</span>
+                <span>摄像头: {alarmData.camera}</span>
+                <span>类型: {alarmData.type}</span>
               </Space>
             }
           />
         </List.Item>
-      )}
+        );
+      }}
     />
   )
 }

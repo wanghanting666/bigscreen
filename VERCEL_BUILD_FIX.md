@@ -14,6 +14,7 @@
 - ✅ 修复了 API 路由中的不安全类型断言
 - ✅ 添加了客户端代码的 SSR 安全检查
 - ✅ 改进了 localStorage 和 document 的访问检查
+- ✅ 修复了 Ant Design List 组件的 TypeScript 类型错误
 
 ### 4. 依赖版本更新
 - ✅ 升级 Next.js 到最新稳定版本 (14.2.0)
@@ -64,6 +65,10 @@
 ### 错误 4: SSR/客户端不匹配
 - 确保所有客户端代码都有 `typeof window !== 'undefined'` 检查
 - 避免在服务端渲染时访问浏览器 API
+
+### 错误 5: Ant Design 组件类型错误
+- 修复了 List 组件的 `renderItem` 类型问题
+- 使用类型断言确保类型安全：`const alarmData = alarm as Alarm`
 
 ## 部署建议
 
