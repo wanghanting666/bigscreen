@@ -22,8 +22,8 @@
 
 ### 5. 构建配置优化
 - ✅ 创建了 `.eslintrc.json` 配置文件
-- ✅ 添加了 `vercel.json` 构建配置
 - ✅ 优化了 ESLint 规则
+- ✅ 移除了不必要的 `vercel.json` 文件（Next.js 项目会自动检测）
 
 ## 部署前检查清单
 
@@ -73,13 +73,22 @@
    vercel --prod
    ```
 
-2. **检查构建日志**
+2. **或者通过 GitHub 集成部署**
+   - 将代码推送到 GitHub 仓库
+   - 在 Vercel Dashboard 中导入项目
+   - Vercel 会自动检测 Next.js 项目并配置构建设置
+
+3. **检查构建日志**
    - 在 Vercel Dashboard 中查看详细的构建日志
    - 关注 TypeScript 和 ESLint 警告
 
-3. **环境变量配置**
+4. **环境变量配置**
    - 确保所有必要的环境变量已在 Vercel 中配置
    - 检查 API 路由的环境变量使用
+
+5. **Node.js 版本设置**
+   - 在 Vercel 项目设置中确保 Node.js 版本为 18.x
+   - Next.js 14 需要 Node.js 18 或更高版本
 
 ## 性能优化建议
 
