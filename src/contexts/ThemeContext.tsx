@@ -29,17 +29,21 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
 
   useEffect(() => {
     // 从localStorage读取主题设置
-    const savedTheme = localStorage.getItem('theme') as ThemeType
-    if (savedTheme) {
-      setThemeState(savedTheme)
+    if (typeof window !== 'undefined') {
+      const savedTheme = localStorage.getItem('theme') as ThemeType
+      if (savedTheme) {
+        setThemeState(savedTheme)
+      }
     }
   }, [])
 
   useEffect(() => {
     // 保存主题设置到localStorage
-    localStorage.setItem('theme', theme)
-    // 设置body的data-theme属性
-    document.body.setAttribute('data-theme', theme)
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('theme', theme)
+      // 设置body的data-theme属性
+      document.body.setAttribute('data-theme', theme)
+    }
   }, [theme])
 
   const toggleTheme = () => {

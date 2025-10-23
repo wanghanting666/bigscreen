@@ -91,6 +91,8 @@ const DataChart: React.FC<DataChartProps> = ({ type, data, config }) => {
   }, [type, data, config])
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
     const handleResize = () => {
       if (chartInstance.current) {
         chartInstance.current.resize()
@@ -103,6 +105,8 @@ const DataChart: React.FC<DataChartProps> = ({ type, data, config }) => {
 
   // 监听主题变化
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
     const observer = new MutationObserver(() => {
       if (chartInstance.current) {
         const option = getChartOption(type, data, config)
@@ -110,12 +114,10 @@ const DataChart: React.FC<DataChartProps> = ({ type, data, config }) => {
       }
     })
 
-    if (typeof document !== 'undefined') {
-      observer.observe(document.documentElement, {
-        attributes: true,
-        attributeFilter: ['data-theme']
-      })
-    }
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme']
+    })
 
     return () => observer.disconnect()
   }, [type, data, config])

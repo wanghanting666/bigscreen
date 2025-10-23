@@ -4,14 +4,13 @@ import { mockData } from '@/data/mockData';
 export async function GET() {
   try {
     // 模拟新的告警数据
+    const alarmTypes = ['motion', 'face', 'vehicle', 'system'] as const;
+    const alarmLevels = ['low', 'medium', 'high', 'critical'] as const;
+    
     const newAlarm = {
       id: Date.now().toString(),
-      type: ['motion', 'face', 'vehicle', 'system'][
-        Math.floor(Math.random() * 4)
-      ] as any,
-      level: ['low', 'medium', 'high', 'critical'][
-        Math.floor(Math.random() * 4)
-      ] as any,
+      type: alarmTypes[Math.floor(Math.random() * alarmTypes.length)],
+      level: alarmLevels[Math.floor(Math.random() * alarmLevels.length)],
       message: '检测到新的告警事件',
       time: new Date().toISOString().replace('T', ' ').substring(0, 19),
       camera: '监控摄像头',

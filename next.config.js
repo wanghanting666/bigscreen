@@ -3,6 +3,9 @@ const nextConfig = {
   images: {
     domains: ['localhost'],
   },
+  compiler: {
+    styledComponents: true,
+  },
   webpack: (config) => {
     config.resolve.fallback = {
       ...config.resolve.fallback,
@@ -10,6 +13,6 @@ const nextConfig = {
     };
     return config;
   },
-}
+};
 
-module.exports = nextConfig 
+module.exports = nextConfig; 
